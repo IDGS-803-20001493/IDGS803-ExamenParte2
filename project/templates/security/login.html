@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<br>
+<center>
+    <div class="card" style="width: 400px; height: 450px;">
+        <div class="card-header">
+            <center>
+                <h2 class="title"> <img src="../static/img/logo.jpg" width="60px" height="60px"> Inicio de sesion</h2>
+    
+            </center>
+        </div>
+        <div class="card-body">
+    
+    
+            <img src="../static/img/Perfil.png" width="80px" height="80px">
+            <center>
+                {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+        {% endwith %}
+            </center>
+    
+    
+                <form method="POST" action="/security/login">
+    
+                    <label style="font-size: 12px;">Correo Electronico</label>
+                    <br>
+                    <input class="input is-large" type="email" name="email" placeholder="Correo Electronico" autofocus="" style="width: 360px;">
+                    <br><br>
+                    
+                    <label style="font-size: 12px;">Contraseña</label>
+                    <br>
+                    <input class="input is-large" type="password" name="password" placeholder="Contraseña" style="width: 360px;">
+                    <br><br>
+
+                    <div class="field">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            Recuerdame
+                        </label>
+                    </div>
+                    <br>
+                <center>
+                    <button class="btn btn-primary" style="width: 200px;">Iniciar Sesion</button>
+                </center>
+                </form>
+            
+        </div>
+    </div>
+    </center>
+    <br>
+{% endblock %}

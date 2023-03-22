@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block content %}
+<center>
+<h1 class="title">
+  Bienvenido, {{ name }}!
+</h1>
+</center>
+
+<div style="overflow: auto; height: 500px; width: 280px; margin-left: 300px; float: left;">
+
+{% for registro in lista %}
+
+<div class="card" style="width: 14rem;">
+  <div class="card-body">
+    {%if registro.estatus == 1%}
+    <h6  style="color:darkgreen">Disponible</h6>
+    {%endif%}
+    {%if registro.estatus == 0%}
+    <h6  style="color:tomato">Agotado</h6>
+    {%endif%}
+
+    <img src="data:image/jpeg;base64,{{ registro.imagen}}" width="180px" height="140px">
+    <h5 class="card-title">{{ registro.nombre }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ registro.precio }}$</h6>
+    <p class="card-text">{{ registro.description }}</p>
+
+    
+    {% if current_user.has_role('admin')%}
+    <div>
+      <div style="float: left;">
+        <form action="/modificar" method="post" enctype="multipart/form-data">
+          <input name="idSet1" value="{{ registro.idSet }}" hidden>
+          <input name="nombre1" value="{{ registro.nombre }}" hidden>
+          <input name="description1" value="{{ registro.description }}" hidden>
+          <input name="precio1" value="{{ registro.precio }}" hidden>
+  
+          <button class="btn btn-warning" type="submit">Modificar</button>
+        </form>
+      </div>
+      <div style="float: right;">
+      <form action="/eliminar" method="post" enctype="multipart/form-data">
+        <input name="idSet2" value="{{ registro.idSet }}" hidden>
+        <button class="btn btn-danger" type="submit">Eliminar</button>
+      </form>
+    </div>
+    </div>
+    {%endif%}
+  
+
+
+
+
+
+  </div>
+</div>
+
+<br>
+{%endfor%}
+</div>
+
+
+
+
+
+<div style="float: right;margin-right: 300px; " >
+
+
+
+  {% if current_user.has_role('admin')%}
+  <form method="POST" action="/guardar" enctype="multipart/form-data">
+    <center>
+    <h4>Llena el formulario</h4>
+  </center>
+    <input class="input is-large" type="text" name="idSet" value="{{idSet}}" hidden>
+    
+    <br>
+    <label style="font-size: 12px;">Nombre</label>
+    <br>
+    <input value="{{nombre}}" class="input is-large" type="text" name="nombre" placeholder="Nombre" autofocus="" style="width: 360px;">
+    <br><br>
+    <label style="font-size: 12px;">Descripcion</label>
+    <br>
+    <input value="{{descripcion}}" class="input is-large" type="text" name="description" placeholder="descripcion" autofocus="" style="width: 360px;">
+    <br><br>
+
+    <label style="font-size: 12px;">precio</label>
+    <br>
+    <input value="{{precio}}" class="input is-large" type="number" name="precio" placeholder="precio" style="width: 100px;">
+    <br><br>
+    <label style="font-size: 12px;">selecciona una imagen</label>
+    <br>
+    <input class="btn btn-success" type="file" name="imagen" placeholder="imagen" style="width: 300px;">
+ 
+    <br><br>
+
+  <center>
+    <button type="submit" class="btn btn-primary" style="width: 200px;">Guarda el set!</button>
+  </center>
+  </form>
+  {%endif%}
+
+
+
+
+  {% if current_user.has_role('user')%}
+  <center>
+  <br>
+  <div>
+  <h2>Mantente al día</h4>
+  <h4>Registrate para ganar premios!</h6>
+  
+<br>
+  <img src="../static/img/modelo.png" width="170px" height="350px" style="box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);">
+
+</div>
+</center>
+  {%endif%}
+
+
+</div>
+
+{% endblock %}
